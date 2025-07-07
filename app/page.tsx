@@ -88,7 +88,7 @@ export default function Home() {
           <div className="xl:col-span-2 space-y-6">
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-2xl font-bold mb-4">Rive Анимация</h2>
-              <div className="aspect-video bg-gray-900 rounded-lg overflow-hidden">
+              <div className="aspect-video bg-transparent rounded-lg overflow-hidden">
                 <RiveComponent />
               </div>
             </div>

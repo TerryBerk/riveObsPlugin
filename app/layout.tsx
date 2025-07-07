@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { headers } from 'next/headers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,6 +15,20 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const headersList = headers()
+  const pathname = headersList.get('x-pathname') || ''
+  const isObsPage = pathname.includes('/obs')
+
+  if (isObsPage) {
+    return (
+      <html lang="en">
+        <body className={`${inter.className} transparent`}>
+          {children}
+        </body>
+      </html>
+    )
+  }
+
   return (
     <html lang="en">
       <body className={inter.className}>

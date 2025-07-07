@@ -26,6 +26,11 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+/* Поддержка прозрачного фона для OBS */
+body.transparent {
+  background: transparent !important;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -47,4 +52,21 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+/* Стили для Rive компонентов */
+.rive-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+}
+
+/* Обеспечиваем плавность анимаций */
+.rive-container {
+  background: transparent;
+  position: relative;
+}
+
+.rive-container canvas {
+  background: transparent !important;
 } 
