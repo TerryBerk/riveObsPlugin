@@ -1,13 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Временное хранение состояния (в продакшене лучше использовать Redis или БД)
+let currentState = {
+  state: 'idle',
+  animation: '/animations/radioculturashowcase.riv',
+  timestamp: new Date().toISOString()
+}
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
-  const state = searchParams.get('state') || 'idle'
+  const requestedState = searchParams.get('state')
   
-  return NextResponse.json({ 
-    message: 'Animation state requested',
-    state: state,
-    timestamp: new Date().toISOString()
+  if (requestedState) {
+    currentState.state = requestedState
+    currentState.timestamp = new Date().toISOString()
+  }
+  
+  return NextResponse.json({
+    ...currentState,
+    message: 'Animation state retrieved'
   })
 }
 
@@ -16,15 +27,19 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { state, animation } = body
     
-    // Здесь можно добавить логику для обработки состояний анимации
-    // Например, сохранение в базу данных или отправка в OBS
+    if (state) {
+      currentState.state = state
+      currentState.timestamp = new Date().toISOString()
+    }
+    
+    if (animation) {
+      currentState.animation = animation
+    }
     
     return NextResponse.json({ 
       success: true,
       message: 'Animation state updated',
-      state: state,
-      animation: animation,
-      timestamp: new Date().toISOString()
+      ...currentState
     })
   } catch (error) {
     return NextResponse.json(
